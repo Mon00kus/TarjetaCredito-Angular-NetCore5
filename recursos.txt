@@ -6,6 +6,8 @@ https://fontawesome.com/
 https://cdnjs.com/libraries/font-awesome
 https://www.npmjs.com/package/ngx-toastr
 
+https://github.com/Mon00kus/TarjetaCredito-Angular-NetCore5
+
 https://www.entityframeworktutorial.net/efcore/entity-framework-core.aspx
 
 Version mas actualizada de ngx-toastr
