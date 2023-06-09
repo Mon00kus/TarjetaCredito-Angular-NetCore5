@@ -1,0 +1,3 @@
+.- solicitudes http hacia un backend
+.- reutilizacion de componentes
+.- comunicacion de datos entre componentes

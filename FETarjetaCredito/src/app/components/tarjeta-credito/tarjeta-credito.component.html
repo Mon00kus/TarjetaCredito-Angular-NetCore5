@@ -1,0 +1,82 @@
+<div class="container mt-5">
+  <div class="row">
+     <div class="col lg-8 ">
+      <div class="card">
+        <div class="card body">
+          <h3 class="titulo text-center">TARJETA DE CREDITO</h3>
+        </div>
+      </div>
+     </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">{{ accion | uppercase }} TARJETA</h5>
+          <form [formGroup]="form" (ngSubmit)="AgregarTarjeta()">
+            <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text"
+                [class.green-icon]="this.form.get('titulo')?.valid"
+                [class.red-icon]="this.form.get('titulo')?.invalid && this.form.get('titulo')?.touched">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <input class="form-control" type="text"  placeholder="Username" formControlName="titulo">
+            </div>
+            <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text"
+                [class.green-icon]="this.form.get('numeroTarjeta')?.valid"
+                [class.red-icon]="this.form.get('numeroTarjeta')?.invalid && this.form.get('numeroTarjeta')?.touched">
+                <i class="fas fa-credit-card"></i>
+              </span>
+              <input class="form-control" type="text" maxlength="16"  placeholder="Credit card" formControlName="numeroTarjeta">
+            </div>
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text"
+                    [class.green-icon]="this.form.get('fechaExpiracion')?.valid"
+                    [class.red-icon]="this.form.get('fechaExpiracion')?.invalid && this.form.get('fechaExpiracion')?.touched">
+                    <i class="fa-solid fa-calendar"></i>
+                  </span>
+                  <input class="form-control" type="text" maxlength="5" placeholder="Calendario" formControlName="fechaExpiracion">
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text"
+                    [class.green-icon]="this.form.get('cvv')?.valid"
+                    [class.red-icon]="this.form.get('cvv')?.invalid && this.form.get('cvv')?.touched">
+                    <i class="fa-solid fa-key"></i>
+                  </span>
+                  <input class="form-control" type="password" maxlength="3"  placeholder="CVv" formControlName="cvv">
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button [disabled]="this.form.invalid" class="btn btn-success btn-lg" type ="submit"><i class="fa-solid fa-database">&nbsp;</i>Aceptar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">LISTADO TARJETAS</h5>
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let tarjeta of listTarjetas"> <!-- , let i=index -->
+                <td>{{tarjeta.titulo}}</td>
+                <td>{{tarjeta.numeroTarjeta}}</td>
+                <td>{{tarjeta.fechaExpiracion}}</td>
+                <td>{{tarjeta.cvv}}</td>
+                <td><i (click)="EditTarjeta(tarjeta)" class="fa-solid fa-pen-to-square text-info far"></i></td>
+                <td><i (click)="DeleteTarjeta(tarjeta.id)" class="fa-solid fa-trash text-danger far"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

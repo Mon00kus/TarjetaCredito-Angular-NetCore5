@@ -1,0 +1,111 @@
+https://angular.io/cli
+https://getbootstrap.com/
+https://uigradients.com/#Cherryblossoms
+https://fonts.google.com/specimen/Potta+One?query=pott
+https://fontawesome.com/
+https://cdnjs.com/libraries/font-awesome
+https://www.npmjs.com/package/ngx-toastr
+
+https://www.entityframeworktutorial.net/efcore/entity-framework-core.aspx
+
+Version mas actualizada de ngx-toastr
+-------------------------------------
+https://www.npmjs.com/package/ngx-toastr <---
+
+helpfull
+https://devs.keenthemes.com/question/in-kentheme-metronics-angular-template-ngx-toastr-is-not-working
+
+Que es un ORM ?
+Es un modelo de programacion que permite mapear las estructuras de una base de datos relacional, (MySql, Sqlserver, Oracle)
+
+¿Cómo puedo saber si un determinado paquete de npm está instalado?
+
+Bash
+npm ls | grep typescript
+Powershell
+npm ls | select-string typescript
+Dos
+npm ls | findstr "typescript"
+Ejemplo
+const fs = require('fs');
+const readline = require('readline');
+const path = require('path');
+
+
+const DEPS_DIR = path.join(process.cwd(), 'node_modules');
+
+if (!process.argv[2]) { // los dos primeros argumentos son "node" y la ruta del script
+  return console.log('\x1b[31m', 'Error: nombre de paquete inválido');
+}
+
+checkModule(process.argv[2].toLowerCase())
+  .then(files => {
+    console.log('\n[+] Packages found:\n');
+    files.forEach(file => {
+
+      let packageInfo = `${DEPS_DIR}/${file}/package.json`;
+      let reader = readline.createInterface({
+        input: fs.createReadStream(packageInfo)
+      });
+
+      reader.on('line', line => {
+        if (line.includes('version')) {
+          let version = line.split(':')[1].replace(/\s/g, '').replace(/"/g, '');
+          console.log('\x1b[32m', `${file}@${version}`);
+        }
+      });
+    });
+  })
+  .catch(err => {
+    console.log(err.message);
+  });
+function checkModule(input) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(DEPS_DIR, (err, files) => {
+      if (err) {
+        reject(
+          new Error('No existe node_modules en este directorio')
+        );
+      } else {
+        resolve(
+          files
+            .filter(file => file.toLowerCase().includes(input))
+        );
+      }
+    });
+  });
+}
+Añade el código anterior en un fichero llamado check-module.js y agrégalo en node_modules global. 
+El paso siguiente es hacer un script en bash y batch para ejecutar el script. 
+Llama estos script check-module y check-module.cmd para Unix y Windows respectivamente.
+
+Unix
+
+#!/bin/sh
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+
+case `uname` in
+    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
+esac
+
+if [ -x "$basedir/node" ]; then
+  "$basedir/node"  "$basedir/node_modules/check-module.js" "$@"
+  ret=$?
+else 
+  node  "$basedir/node_modules/check-module.js" "$@"
+  ret=$?
+fi
+exit $ret
+Windows
+
+@IF EXIST "%~dp0\node.exe" (
+  "%~dp0\node.exe"  "%~dp0\node_modules\check-module.js" %*
+) ELSE (
+  @SETLOCAL
+  @SET PATHEXT=%PATHEXT:;.JS;=;%
+  node  "%~dp0\node_modules\check-module.js" %*
+)
+Por último, solo ejecuta en cualquier proyecto:
+
+check-module <nombre>
+
